@@ -26,15 +26,17 @@ jobs:
         cd frontend
         npm install
 
-    - name: Install dependencies (Backend)
-      run: |
-        cd backend
-        npm install
-
     - name: Build frontend
       run: |
         cd frontend
         npm run build
+
+
+    - name: Install dependencies (Backend)
+      run: |
+          cd backend
+          npm install
+  
 
     - name: Trigger front-end redeploy
       run: |
