@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 const taskSchema = new mongoose.Schema(
     {
         sprint: {
-            type: Number,
+            type: String,
             required: true,
+            trim: true,
         },
         description: {
             type: String,

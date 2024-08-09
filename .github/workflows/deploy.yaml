@@ -1,0 +1,43 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+
+    - name: Install dependencies (Frontend)
+      run: |
+        cd frontend
+        npm install
+
+    - name: Install dependencies (Backend)
+      run: |
+        cd backend
+        npm install
+
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm run build
+
+    - name: Trigger front-end redeploy
+      run: |
+          curl -X GET \
+            #
+            
