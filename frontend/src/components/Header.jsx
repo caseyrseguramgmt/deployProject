@@ -5,7 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 
 
 
-const Header = () => {
+const Header = () => {    
     return (
         <Container maxW="1140px" px={4} py={2}>
             <Flex 

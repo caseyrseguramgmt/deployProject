@@ -1,33 +1,56 @@
-import React from 'react';
-import { Box, Button, Container, Heading, Input, Textarea, useColorModeValue, VStack } from '@chakra-ui/react';
+import { Input, VStack, Container, Box, Button, Heading } from '@chakra-ui/react';
+import { useState } from 'react';
 
 const Add = () => {
+    const [newTask, setNewTask] = useState({
+        sprint: "",
+        description: "",
+        learned: "",
+        priority: "",
+    });
+
+    const handleAddTask = () => {
+        console.log(newTask);
+    }
+
     return (
         <Container maxW={"container.md"}>
             <VStack spacing={6}>
                 <Heading as={"h1"} size={"xl"} textAlign={"center"} mb={6}>
                     Create New Task
                 </Heading>
-
-                <Box
-                    w={"full"}
-                    bg={useColorModeValue("gray.50", "gray.700")}
-                    p={5}
-                    rounded={"md"}
-                    shadow={"lg"}
+                
+                <Box 
+                w={"full"} 
+                bg={"white"} 
+                p={5} 
+                rounded={"md"} 
+                shadow={"lg"}
                 >
                     <VStack spacing={4}>
                         <Input
-                            placeholder="Sprint Number"
-                        />
-                        <Textarea
-                            placeholder="Task Description"
-                        />
-                        <Textarea
-                            placeholder="Lessons Learned"
+                        placeholder='Sprint Number'
+                        name='sprint'
+                        value={newTask.sprint}
+                        onChange={e => setNewTask({...newTask, sprint: e.target.value})}
                         />
                         <Input
-                            placeholder="Task Priority"
+                        placeholder='Description'
+                        name='description'
+                        value={newTask.description}
+                        onChange={e => setNewTask({...newTask, description: e.target.value})}
+                        />
+                        <Input
+                        placeholder='Learned'
+                        name='learned'
+                        value={newTask.learned}
+                        onChange={e => setNewTask({...newTask, learned: e.target.value})}
+                        />
+                        <Input
+                        placeholder='Priority Level'
+                        name='priority'
+                        value={newTask.priority}
+                        onChange={e => setNewTask({...newTask, priority: e.target.value})}
                         />
 
                         <Button
@@ -37,6 +60,7 @@ const Add = () => {
                                 bgGradient: "linear(to-r, pink.400, red.400)",
                             }}
                             w='full'
+                            onClick={handleAddTask}
                         >
                             Submit
                         </Button>
