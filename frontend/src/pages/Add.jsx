@@ -1,5 +1,6 @@
-import { Input, VStack, Container, Box, Button, Heading } from '@chakra-ui/react';
+import { Input, VStack, Container, Box, Button, Heading, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Add = () => {
     const [newTask, setNewTask] = useState({
@@ -9,9 +10,27 @@ const Add = () => {
         priority: "",
     });
 
-    const handleAddTask = () => {
-        console.log(newTask);
-    }
+    const navigate = useNavigate();
+
+    const handleAddTask = async () => {
+        try {
+            const response = await fetch("http://localhost:3000/api/tasks", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newTask),
+            });
+            const data = await response.json();
+            if (data.success) {
+                setNewTask({ sprint: "", description: "", learned: "", priority: "" });
+                navigate("/"); // Redirect to Home Page
+            } else {
+                alert("Failed to add task: " + data.message);
+            }
+        } catch (error) {
+            console.error("Error adding task:", error);
+            alert("Error adding task. Check console for details.");
+        }
+    };
 
     return (
         <Container maxW={"container.md"}>
@@ -28,25 +47,25 @@ const Add = () => {
                 shadow={"lg"}
                 >
                     <VStack spacing={4}>
-                        <Input
+                        <Textarea
                         placeholder='Sprint Number'
                         name='sprint'
                         value={newTask.sprint}
                         onChange={e => setNewTask({...newTask, sprint: e.target.value})}
                         />
-                        <Input
+                        <Textarea
                         placeholder='Description'
                         name='description'
                         value={newTask.description}
                         onChange={e => setNewTask({...newTask, description: e.target.value})}
                         />
-                        <Input
+                        <Textarea
                         placeholder='Learned'
                         name='learned'
                         value={newTask.learned}
                         onChange={e => setNewTask({...newTask, learned: e.target.value})}
                         />
-                        <Input
+                        <Textarea
                         placeholder='Priority Level'
                         name='priority'
                         value={newTask.priority}
